@@ -80,7 +80,7 @@ namespace Payroll_Service
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@Basic_pay", obj.Basic_pay);
                 com.Parameters.AddWithValue("@Name", obj.Name);
-
+                con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();
                 if (i >= 1)

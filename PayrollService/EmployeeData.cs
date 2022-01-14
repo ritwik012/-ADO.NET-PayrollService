@@ -7,7 +7,6 @@ namespace Payroll_Service
     public class EmployeeData
 
     {
-        /* public int id { get; set; }*/
         public string Name { get; set; }
         public double Basic_pay { get; set; }
         public DateTime StartDate { get; set; }
@@ -19,6 +18,6 @@ namespace Payroll_Service
         public double Taxable_pay { get; set; }
         public double IncomeTax_pay { get; set; }
         public double Net_Pay { get; set; }
-        /*public int DepId { get; set; }*/
+
     }
 }
