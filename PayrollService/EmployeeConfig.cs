@@ -96,38 +96,28 @@ namespace Payroll_Service
             }
 
         }
-        public List<EmployeeData> GetAllEmployees()
+        public DataSet GetAllEmployees()
         {
-            Connection();
-            SqlCommand com = new SqlCommand("GetPayrollService", con);
-            com.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataTable dt = new DataTable();
-
-            con.Open();
-            da.Fill(dt);
-            con.Close();
-
-            foreach (DataRow dr in dt.Rows)
+            try
             {
-                EmpList.Add(
-                    new EmployeeData
-                    {
-                        Name = Convert.ToString(dr["Name"]),
-                        Basic_pay = Convert.ToDouble(dr["Basic_pay"]),
-                        StartDate = Convert.ToDateTime(dr["Date"]),
-                        gender = Convert.ToChar(dr["gender"]),
-                        phone = Convert.ToString(dr["phone"]),
-                        Address = Convert.ToString(dr["Address"]),
-                        Department = Convert.ToString(dr["Department"]),
-                        Deduction = Convert.ToDouble(dr["Deduction"]),
-                        Taxable_pay = Convert.ToDouble(dr["Raxable_pay"]),
-                        IncomeTax_pay = Convert.ToDouble(dr["IncomeTax_pay"]),
-                        Net_Pay = Convert.ToDouble(dr["Net_pay"]),
-                    }
-                    );
+                Connection();
+                SqlCommand com = new SqlCommand("GetPayrollService", con);
+                com.CommandType = CommandType.StoredProcedure;
+                DataSet dataSet = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter("GetPayrollService", this.con);
+                adapter.Fill(dataSet, "employee_payroll");
+                foreach (DataRow dr in dataSet.Tables["employee_payroll"].Rows)
+                {
+                    Console.WriteLine(dr["id"] + " " + dr["Name"] + " " + dr["Basic_pay"] + " " + dr["StartDate"] + " " + dr["gender"] + " " + dr["phone"] + " "
+                     + dr["Address"] + " " + dr["Department"] + " " + dr["Deduction"] + " " + dr["Taxable_pay"] + " " + dr["IncomeTax_pay"] + " " + dr["Net_Pay"]);
+                }
+                con.Close();
+                return dataSet;
             }
-            return EmpList;
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
         public void Display()
         {
